@@ -13,6 +13,7 @@ setup(name='collective.rtvideo.youtube',
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
+        "Topic :: Multimedia :: Video",
         ],
       keywords='plone plonegov video embed youtube',
       author='RedTurtle Technology',
