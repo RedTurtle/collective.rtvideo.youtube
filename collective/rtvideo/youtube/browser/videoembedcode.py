@@ -1,0 +1,99 @@
+# -*- coding: utf-8 -*-
+
+from urlparse import urlparse
+from zope.interface import implements
+from redturtle.video.interfaces import IVideoEmbedCode
+from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+
+from redturtle.video.browser.videoembedcode import VideoEmbedCode
+
+class YoutubeEmbedCode(VideoEmbedCode):
+    """ YoutubeEmbedCode 
+    Provides a way to have a html code to embed Youtube video in a web page 
+
+    >>> from zope.interface import implements
+    >>> from redturtle.video.interfaces import IRTRemoteVideo
+    >>> from redturtle.video.interfaces import IVideoEmbedCode
+    >>> from zope.component import getMultiAdapter
+    >>> from redturtle.video.tests.base import TestRequest
+
+    >>> class RemoteVideo(object):
+    ...     implements(IRTRemoteVideo)
+    ...     remoteUrl = 'http://www.youtube.com/watch?v=s43WGi_QZEE&feature=related'
+    ...     size = {'width': 425, 'height': 349}
+    ...     def getRemoteUrl(self):
+    ...         return self.remoteUrl
+    ...     def getWidth(self):
+    ...         return self.size['width']
+    ...     def getHeight(self):
+    ...         return self.size['height']
+
+    >>> remotevideo = RemoteVideo()
+    >>> adapter = getMultiAdapter((remotevideo, TestRequest()), 
+    ...                                         IVideoEmbedCode, 
+    ...                                         name = 'youtube.com')
+    >>> adapter.getVideoLink()
+    'http://www.youtube.com/v/s43WGi_QZEE'
+
+    >>> print adapter()
+    <object width="425" height="349">
+      <param name="movie"
+             value="http://www.youtube.com/v/s43WGi_QZEE" />
+      <param name="allowFullScreen" value="true" />
+      <param name="allowscriptaccess" value="always" />
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE"
+             type="application/x-shockwave-flash"
+             allowscriptaccess="always" allowfullscreen="true"
+             width="425" height="349"></embed>
+    </object>
+    <BLANKLINE>
+
+    Also, the new version of the embed URL must works:
+    
+    >>> class RemoteVideo(object):
+    ...     implements(IRTRemoteVideo)
+    ...     remoteUrl = 'http://youtu.be/watch?v=s43WGi_QZEE&feature=related'
+    ...     size = {'width': 425, 'height': 349}
+    ...     def getRemoteUrl(self):
+    ...         return self.remoteUrl
+    ...     def getWidth(self):
+    ...         return self.size['width']
+    ...     def getHeight(self):
+    ...         return self.size['height']
+
+    >>> remotevideo = RemoteVideo()
+    >>> adapter = getMultiAdapter((remotevideo, TestRequest()), 
+    ...                                         IVideoEmbedCode, 
+    ...                                         name = 'youtu.be')
+    >>> adapter.getVideoLink()
+    'http://youtu.be/v/s43WGi_QZEE'
+
+    >>> print adapter()
+    <object width="425" height="349">
+      <param name="movie"
+             value="http://youtu.be/v/s43WGi_QZEE" />
+      <param name="allowFullScreen" value="true" />
+      <param name="allowscriptaccess" value="always" />
+      <embed src="http://youtu.be/v/s43WGi_QZEE"
+             type="application/x-shockwave-flash"
+             allowscriptaccess="always" allowfullscreen="true"
+             width="425" height="349"></embed>
+    </object>
+    <BLANKLINE>
+
+    """
+    template = ViewPageTemplateFile('youtubeembedcode_template.pt')
+
+    def getVideoLink(self):
+        url = self.context.getRemoteUrl()
+        if 'youtu.be' in url:
+            host = 'youtu.be'
+        else:
+            host = 'www.youtube.com'
+
+        qs = urlparse(self.context.getRemoteUrl())[4]
+        params = qs.split('&')
+        for param in params:
+            k, v = param.split('=')
+            if k == 'v':
+                return 'http://%s/v/%s' % (host, v)
