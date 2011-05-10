@@ -1,0 +1,8 @@
+Changelog
+=========
+
+0.1.0 (Unreleased)
+------------------
+
+* Initial release (moved out from ``redturtle.video``)
+* Support new ``youtu.be`` URLs
