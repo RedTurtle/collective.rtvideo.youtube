@@ -49,7 +49,7 @@ class ClassicYoutubeEmbedCode(VideoEmbedCode):
     <BLANKLINE>
 
     """
-    template = ViewPageTemplateFile('youtubeembedcode_template.pt')
+    template = ViewPageTemplateFile('classic_youtubeembedcode_template.pt')
 
     def getVideoLink(self):
         qs = urlparse(self.context.getRemoteUrl())[4]
@@ -92,10 +92,10 @@ class ShortYoutubeEmbedCode(VideoEmbedCode):
     >>> print adapter()
     <object width="425" height="349">
       <param name="movie"
-             value="http://youtu.be/s43WGi_QZEE" />
+             value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
       <param name="allowscriptaccess" value="always" />
-      <embed src="http://youtu.be/s43WGi_QZEE"
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE"
              type="application/x-shockwave-flash"
              allowscriptaccess="always" allowfullscreen="true"
              width="425" height="349"></embed>
@@ -103,7 +103,12 @@ class ShortYoutubeEmbedCode(VideoEmbedCode):
     <BLANKLINE>
 
     """
-    template = ViewPageTemplateFile('youtubeembedcode_template.pt')
+    template = ViewPageTemplateFile('short_youtubeembedcode_template.pt')
+
+    def getEmbedVideoLink(self):
+        """Video link, just for embedding needs"""
+        path = urlparse(self.context.getRemoteUrl())[2]
+        return 'http://www.youtube.com/v%s' % path
 
     def getVideoLink(self):
         path = urlparse(self.context.getRemoteUrl())[2]

@@ -27,6 +27,7 @@ setup(name='collective.rtvideo.youtube',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'Plone',
           'redturtle.video>=0.5.0',
       ],
       entry_points="""
