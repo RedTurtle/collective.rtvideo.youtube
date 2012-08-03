@@ -18,6 +18,8 @@ from zope.publisher.interfaces.browser import IHTTPRequest
 from zope.publisher.browser import TestRequest
 from zope.interface import implements
 
+from redturtle.video.interfaces import IRTRemoteVideo
+
 @onsetup
 def setup_product():
     """Set up the package and its dependencies.
@@ -68,6 +70,27 @@ class TestCase(ptc.PloneTestCase):
     necessary, we can put common utility or setup code in here. This
     applies to unit test cases.
     """
+    
+class RemoteVideo(object):
+    """
+    We provide a fake video for test
+    """
+    implements(IRTRemoteVideo)
+    remoteUrl = 'http://www.youtube.com/watch?v=s43WGi_QZEE&feature=related'
+    
+    def getRemoteUrl(self):
+        return self.remoteUrl
+
+class ShortUrlRemoteVideo(object):
+    """
+    We provide a fake video for test
+    """
+    implements(IRTRemoteVideo)
+    remoteUrl = 'http://youtu.be/s43WGi_QZEE'
+    
+    def getRemoteUrl(self):
+        return self.remoteUrl
+
 
 
 class FunctionalTestCase(ptc.FunctionalTestCase):

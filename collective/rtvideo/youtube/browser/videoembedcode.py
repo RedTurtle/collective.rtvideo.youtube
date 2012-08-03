@@ -5,11 +5,35 @@ from zope.interface import implements
 from redturtle.video.interfaces import IVideoEmbedCode
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from redturtle.video.browser.videoembedcode import VideoEmbedCode
+from redturtle.video.browser.videoembedcode import VideoEmbedCode, ThumbObject
 
-class ClassicYoutubeEmbedCode(VideoEmbedCode):
-    """ ClassicYoutubeEmbedCode 
-    Provides a way to have a html code to embed Youtube video in a web page 
+class YoutubeGetThumbnail(object):
+
+    def getThumb(self):
+        """
+        Youtube API 2.0 use this format to return images:
+        http://img.youtube.com/vi/<video id>/{0,1,2,3}.jpg;
+
+        video id: an alphanumeric string like 'ODA33daiSS';
+        image format: always 'jpg', so we use a fix 'image/jpeg' as mimetype;
+        {0,1,2,3}: youtube should provide 4 thumb. The first one (0) is the
+                   biggest one; the others are smaller, so we take the biggest.
+
+        So you can call somethign like:
+             http://img.youtube.com/vi/S9UABZVATeY/0.jpg
+        """
+        parsed_remote_url = urlparse(self.context.getRemoteUrl())
+        video_id = self.get_video_id(parsed_remote_url)
+        img_url = 'http://img.youtube.com/vi/%s/0.jpg'%video_id
+        thumb_obj = ThumbObject(img_url,
+                                'image/jpeg',
+                                '%s-image.jpg'%video_id)
+        return thumb_obj
+
+
+class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
+    """ ClassicYoutubeEmbedCode
+    Provides a way to have a html code to embed Youtube video in a web page
 
     >>> from zope.interface import implements
     >>> from redturtle.video.interfaces import IRTRemoteVideo
@@ -29,8 +53,8 @@ class ClassicYoutubeEmbedCode(VideoEmbedCode):
     ...         return self.size['height']
 
     >>> remotevideo = RemoteVideo()
-    >>> adapter = getMultiAdapter((remotevideo, TestRequest()), 
-    ...                                         IVideoEmbedCode, 
+    >>> adapter = getMultiAdapter((remotevideo, TestRequest()),
+    ...                                         IVideoEmbedCode,
     ...                                         name = 'youtube.com')
     >>> adapter.getVideoLink()
     'http://www.youtube.com/v/s43WGi_QZEE'
@@ -58,9 +82,14 @@ class ClassicYoutubeEmbedCode(VideoEmbedCode):
             k, v = param.split('=')
             if k == 'v':
                 return 'http://www.youtube.com/v/%s' % v
+    
+    def get_video_id(self, parsed_remote_url):
+        qs = parsed_remote_url[4]
+        return dict([x.split("=") for x in qs.split("&")])['v']
+        
 
 
-class ShortYoutubeEmbedCode(VideoEmbedCode):
+class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     """ ShortYoutubeEmbedCode 
     Provides a way to have a html code to embed Youtube video in a web page (short way).
     Also, the new version of the embed URL must works:
@@ -113,3 +142,7 @@ class ShortYoutubeEmbedCode(VideoEmbedCode):
     def getVideoLink(self):
         path = urlparse(self.context.getRemoteUrl())[2]
         return 'http://youtu.be%s' % path
+    
+    def get_video_id(self, parsed_remote_url):
+        return parsed_remote_url[2].replace('/','')
+

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1.1dev'
+version = '0.1.1'
 
 setup(name='collective.rtvideo.youtube',
       version=version,
@@ -27,7 +27,7 @@ setup(name='collective.rtvideo.youtube',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'redturtle.video>=0.5.0',
+          'redturtle.video>=0.7.4',
       ],
       entry_points="""
       # -*- Entry points: -*-

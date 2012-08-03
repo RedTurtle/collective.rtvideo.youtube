@@ -5,6 +5,8 @@ Changelog
 ------------------
 
 * Fixed egg dependency only to ``redturtle.video`` [keul]
+* add getThumb method to return a default thumnail image to redturtle.video on
+  IRemoteVideo creation. [lucabel]
 
 0.1.0 (2011-05-12)
 ------------------
