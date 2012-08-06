@@ -1,3 +1,4 @@
+<div class="youtube-sh-url-wrapper">
 <object width="425" height="344"
         tal:attributes="width view/getWidth;
                         height view/getHeight;">
@@ -5,9 +6,11 @@
          tal:attributes="value view/getEmbedVideoLink" />
   <param name="allowFullScreen" value="true"/>
   <param name="allowscriptaccess" value="always"/>
+  <param name="wmode" value="transparent">
   <embed src="" tal:attributes="src view/getEmbedVideoLink;
                                 width view/getWidth;
-                                height view/getHeight;" 
+                                height view/getHeight;"
       type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"
-	  width="425" height="344"></embed>
+      wmode="transparent" width="425" height="344"></embed>
 </object>
+</div>
