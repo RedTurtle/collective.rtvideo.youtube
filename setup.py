@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1.1'
+version = '0.2.0'
 
 setup(name='collective.rtvideo.youtube',
       version=version,
@@ -12,13 +12,17 @@ setup(name='collective.rtvideo.youtube',
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: 3.3",
+        "Framework :: Plone :: 4.0",
+        "Framework :: Plone :: 4.1",
+        "Framework :: Plone :: 4.2",
         "Programming Language :: Python",
         "Topic :: Multimedia :: Video",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         ],
       keywords='plone plonegov video embed youtube',
       author='RedTurtle Technology',
-      author_email='sviluppoplone@redturtle.net',
+      author_email='sviluppoplone@redturtle.it',
       url='http://plone.org/products/redturtle.video',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
@@ -27,7 +31,7 @@ setup(name='collective.rtvideo.youtube',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'redturtle.video>=0.7.4',
+          'redturtle.video>=0.8.0',
       ],
       entry_points="""
       # -*- Entry points: -*-

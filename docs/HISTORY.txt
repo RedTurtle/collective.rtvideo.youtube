@@ -1,12 +1,13 @@
 Changelog
 =========
 
-0.1.1 (2012-08-08)
+0.2.0 (unreleased)
 ------------------
 
 * Fixed egg dependency only to ``redturtle.video`` [keul]
-* add getThumb method to return a default thumnail image to redturtle.video on
-  IRemoteVideo creation. [lucabel]
+* add getThumb method to return a default thumbnail image to redturtle.video on
+  IRemoteVideo creation. This is a new feature of redturtle.video 0.8 and up.
+  [lucabel]
 * Add a new div around object tag in video template, new param and transparency.
   So you can be able to set correctly a z-index on this div and solve overlap
   problem with other elements on Internet Explorer. [lucabel]
