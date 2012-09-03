@@ -1,4 +1,4 @@
-<div class="youtube-sh-url-wrapper">
+<div class="youtubeEmbedWrapper">
 <object width="425" height="344"
         tal:attributes="width view/getWidth;
                         height view/getHeight;">

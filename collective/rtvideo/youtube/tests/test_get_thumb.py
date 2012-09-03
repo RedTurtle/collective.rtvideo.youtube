@@ -5,7 +5,7 @@ from redturtle.video.tests.base import TestRequest
 from collective.rtvideo.youtube.tests.base import (RemoteVideo,
                                                   TestCase,
                                                   ShortUrlRemoteVideo)
-from redturtle.video.browser.videoembedcode import ThumbObject
+from redturtle.video.remote_thumb import RemoteThumb
 import unittest
 
 class TestGetThumb(TestCase):
@@ -31,7 +31,7 @@ class TestGetThumb(TestCase):
         self.assertEqual('http://img.youtube.com/vi/%s/0.jpg'%video_id,
                          thumb_obj.url)
 
-        self.assertTrue(isinstance(thumb_obj, ThumbObject))
+        self.assertTrue(isinstance(thumb_obj, RemoteThumb))
         
     def test_get_thumb_for_short_url(self):
         """
@@ -54,7 +54,7 @@ class TestGetThumb(TestCase):
         self.assertEqual('http://img.youtube.com/vi/%s/0.jpg'%video_id,
                          thumb_obj.url)
 
-        self.assertTrue(isinstance(thumb_obj, ThumbObject))
+        self.assertTrue(isinstance(thumb_obj, RemoteThumb))
         
 def test_suite():
     suite = unittest.TestSuite()

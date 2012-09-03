@@ -2,10 +2,11 @@
 
 from urlparse import urlparse
 from zope.interface import implements
-from redturtle.video.interfaces import IVideoEmbedCode
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from redturtle.video.browser.videoembedcode import VideoEmbedCode, ThumbObject
+from redturtle.video.interfaces import IVideoEmbedCode
+from redturtle.video.remote_thumb import RemoteThumb
+from redturtle.video.browser.videoembedcode import VideoEmbedCode
 
 class YoutubeGetThumbnail(object):
 
@@ -25,7 +26,7 @@ class YoutubeGetThumbnail(object):
         parsed_remote_url = urlparse(self.context.getRemoteUrl())
         video_id = self.get_video_id(parsed_remote_url)
         img_url = 'http://img.youtube.com/vi/%s/0.jpg'%video_id
-        thumb_obj = ThumbObject(img_url,
+        thumb_obj = RemoteThumb(img_url,
                                 'image/jpeg',
                                 '%s-image.jpg'%video_id)
         return thumb_obj
@@ -60,16 +61,15 @@ class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     'http://www.youtube.com/v/s43WGi_QZEE'
 
     >>> print adapter()
+    <div class="youtubeEmbedWrapper">
     <object width="425" height="349">
-      <param name="movie"
-             value="http://www.youtube.com/v/s43WGi_QZEE" />
+      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
       <param name="allowscriptaccess" value="always" />
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE"
-             type="application/x-shockwave-flash"
-             allowscriptaccess="always" allowfullscreen="true"
-             width="425" height="349"></embed>
+      <param name="wmode" value="transparent">
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
     </object>
+    </div>
     <BLANKLINE>
 
     """
@@ -119,16 +119,15 @@ class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     'http://youtu.be/s43WGi_QZEE'
 
     >>> print adapter()
+    <div class="youtubeEmbedWrapper">
     <object width="425" height="349">
-      <param name="movie"
-             value="http://www.youtube.com/v/s43WGi_QZEE" />
+      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
       <param name="allowscriptaccess" value="always" />
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE"
-             type="application/x-shockwave-flash"
-             allowscriptaccess="always" allowfullscreen="true"
-             width="425" height="349"></embed>
+      <param name="wmode" value="transparent">
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
     </object>
+    </div>
     <BLANKLINE>
 
     """
