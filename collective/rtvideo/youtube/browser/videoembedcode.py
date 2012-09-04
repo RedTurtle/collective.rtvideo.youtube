@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from urlparse import urlparse
-from zope.interface import implements
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from redturtle.video.interfaces import IVideoEmbedCode
 from redturtle.video.remote_thumb import RemoteThumb
 from redturtle.video.browser.videoembedcode import VideoEmbedCode
 

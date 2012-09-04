@@ -10,8 +10,8 @@ URLs for "Video link" content type.
 __ http://plone.org/products/redturtle.video
 __ http://www.youtube.com/
 
-Valid URL format
-================
+Valid URL formats
+=================
 
 Classic URL is supported::
 

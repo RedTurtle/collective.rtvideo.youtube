@@ -1,12 +1,16 @@
-from zope.interface import implements
-from redturtle.video.interfaces import IVideoEmbedCode
-from zope.component import getMultiAdapter
-from redturtle.video.tests.base import TestRequest
-from collective.rtvideo.youtube.tests.base import (RemoteVideo,
-                                                  TestCase,
-                                                  ShortUrlRemoteVideo)
-from redturtle.video.remote_thumb import RemoteThumb
+# -*- coding: utf-8 -*-
+
 import unittest
+
+from zope.component import getMultiAdapter
+
+from redturtle.video.tests.base import TestRequest
+from redturtle.video.remote_thumb import RemoteThumb
+from redturtle.video.interfaces import IVideoEmbedCode
+
+from collective.rtvideo.youtube.tests.base import RemoteVideo
+from collective.rtvideo.youtube.tests.base import TestCase
+from collective.rtvideo.youtube.tests.base import ShortUrlRemoteVideo
 
 class TestGetThumb(TestCase):
     
