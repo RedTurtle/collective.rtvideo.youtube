@@ -6,7 +6,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from redturtle.video.remote_thumb import RemoteThumb
 from redturtle.video.browser.videoembedcode import VideoEmbedCode
 
-class YoutubeGetThumbnail(object):
+class YoutubeBase(object):
 
     def getThumb(self):
         """
@@ -23,14 +23,21 @@ class YoutubeGetThumbnail(object):
         """
         parsed_remote_url = urlparse(self.context.getRemoteUrl())
         video_id = self.get_video_id(parsed_remote_url)
-        img_url = 'http://img.youtube.com/vi/%s/0.jpg'%video_id
+        img_url = 'http://img.youtube.com/vi/%s/0.jpg' % video_id
         thumb_obj = RemoteThumb(img_url,
                                 'image/jpeg',
                                 '%s-image.jpg'%video_id)
         return thumb_obj
+    
+    def check_autoplay(self, url):
+        """Check if the we need to add the autplay parameter, and add it to the URL"""
+        if self.context.getRemoteUrl().lower().find('?autoplay=1')>-1 or \
+                self.request.QUERY_STRING.lower().find('autoplay=1')>-1:
+            url+='?autoplay=1'
+        return url
 
 
-class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
+class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     """ ClassicYoutubeEmbedCode
     Provides a way to have a html code to embed Youtube video in a web page
 
@@ -38,7 +45,7 @@ class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     >>> from redturtle.video.interfaces import IRTRemoteVideo
     >>> from redturtle.video.interfaces import IVideoEmbedCode
     >>> from zope.component import getMultiAdapter
-    >>> from redturtle.video.tests.base import TestRequest
+    >>> from collective.rtvideo.youtube.tests.base import TestRequest
 
     >>> class RemoteVideo(object):
     ...     implements(IRTRemoteVideo)
@@ -60,10 +67,10 @@ class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
 
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
-    <object width="425" height="349">
+    <object width="425" height="349" id="youtubeVideo">
       <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
-      <param name="allowscriptaccess" value="always" />
+      <param name="allowScriptAccess" value="always" />
       <param name="wmode" value="transparent">
       <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
     </object>
@@ -79,7 +86,7 @@ class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
         for param in params:
             k, v = param.split('=')
             if k == 'v':
-                return 'http://www.youtube.com/v/%s' % v
+                return self.check_autoplay('http://www.youtube.com/v/%s' % v)
     
     def get_video_id(self, parsed_remote_url):
         qs = parsed_remote_url[4]
@@ -87,7 +94,7 @@ class ClassicYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
         
 
 
-class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
+class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     """ ShortYoutubeEmbedCode 
     Provides a way to have a html code to embed Youtube video in a web page (short way).
     Also, the new version of the embed URL must works:
@@ -96,7 +103,7 @@ class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     >>> from redturtle.video.interfaces import IRTRemoteVideo
     >>> from redturtle.video.interfaces import IVideoEmbedCode
     >>> from zope.component import getMultiAdapter
-    >>> from redturtle.video.tests.base import TestRequest
+    >>> from collective.rtvideo.youtube.tests.base import TestRequest
 
     >>> class RemoteVideo(object):
     ...     implements(IRTRemoteVideo)
@@ -118,12 +125,25 @@ class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
 
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
-    <object width="425" height="349">
+    <object width="425" height="349" id="youtubeVideo">
       <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
-      <param name="allowscriptaccess" value="always" />
+      <param name="allowScriptAccess" value="always" />
       <param name="wmode" value="transparent">
       <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
+    </object>
+    </div>
+    <BLANKLINE>
+
+    >>> remotevideo.remoteUrl += '?AUTOPLAY=1'
+    >>> print adapter()
+    <div class="youtubeEmbedWrapper">
+    <object width="425" height="349" id="youtubeVideo">
+      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1" />
+      <param name="allowFullScreen" value="true" />
+      <param name="allowScriptAccess" value="always" />
+      <param name="wmode" value="transparent">
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
     </object>
     </div>
     <BLANKLINE>
@@ -134,11 +154,11 @@ class ShortYoutubeEmbedCode(YoutubeGetThumbnail, VideoEmbedCode):
     def getEmbedVideoLink(self):
         """Video link, just for embedding needs"""
         path = urlparse(self.context.getRemoteUrl())[2]
-        return 'http://www.youtube.com/v%s' % path
+        return self.check_autoplay('http://www.youtube.com/v%s' % path)
 
     def getVideoLink(self):
         path = urlparse(self.context.getRemoteUrl())[2]
-        return 'http://youtu.be%s' % path
+        return self.check_autoplay('http://youtu.be%s' % path)
     
     def get_video_id(self, parsed_remote_url):
         return parsed_remote_url[2].replace('/','')

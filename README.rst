@@ -21,3 +21,16 @@ Also the shortened version can be used::
 
     http://youtu.be/f7OLg1AZvr4
 
+Autoplay
+--------
+
+You can enabled the YoutTube video autoplay in two ways:
+
+* Use the YouTube ``autoplay=1`` parameter in the remote YouTube video
+  you are saving in Plone.
+  
+  This is a permanent autoplay (the editor choose to autoplay the video)
+* Call the RedTurtle video content with the ``autoplay=1`` parameter.
+  
+  This is a user choice autoplay (who links the Plone content choose to auto
+  start it)

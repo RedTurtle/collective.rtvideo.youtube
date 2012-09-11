@@ -1,11 +1,15 @@
 Changelog
 =========
 
-0.2.1 (unreleased)
+0.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+* added a video object id (for usability reason)
+  [keul]
+* if the YouTube URL contains the ``autoplay=1`` parameter
+  or if the RedTurtle video contents is called with the same
+  param, autoplay on video will be enabled
+  [keul] 
 
 0.2.0 (2012-09-04)
 ------------------

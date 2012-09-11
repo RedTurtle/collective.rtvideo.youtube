@@ -15,7 +15,7 @@ from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import onsetup
 
 from zope.publisher.interfaces.browser import IHTTPRequest
-from zope.publisher.browser import TestRequest
+from zope.publisher.browser import TestRequest as BaseTestRequest
 from zope.interface import implements
 
 from redturtle.video.interfaces import IRTRemoteVideo
@@ -61,8 +61,15 @@ def setup_product():
 setup_product()
 ptc.setupPloneSite(products=['redturtle.video', 'collective.rtvideo.youtube'])
 
-class TestRequest(TestRequest):
+class TestRequest(BaseTestRequest):
     implements(IHTTPRequest)
+    
+    def __init__(self, body_instream=None, environ=None, form=None,
+             skin=None, **kw):
+        BaseTestRequest.__init__(self, body_instream=None, environ=None,
+            form=None, skin=None, **kw)
+
+        self.QUERY_STRING = ''
 
 
 class TestCase(ptc.PloneTestCase):
