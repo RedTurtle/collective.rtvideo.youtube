@@ -21,6 +21,6 @@ function onYouTubePlayerReady() {
                                 height view/getHeight;
                                 tabindex python:view.check_autofocus() and '1' or None;"
       type="application/x-shockwave-flash" allowScriptAccess="always" allowfullscreen="true"
-      wmode="transparent" width="425" height="344"></embed>
+	  wmode="transparent" width="425" height="344"></embed>
 </object>
 </div>

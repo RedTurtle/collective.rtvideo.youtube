@@ -9,7 +9,13 @@ Changelog
 * if the YouTube URL contains the ``autoplay=1`` parameter
   or if the RedTurtle video contents is called with the same
   param, autoplay on video will be enabled
-  [keul] 
+  [keul]
+* in the request url use autoplay, some accessibility/usability
+  improvements are added to the page, for simply keyboard controls
+  [keul]
+* removed the secondary template, just use one template for standard
+  and shortened embedding
+  [keul]
 
 0.2.0 (2012-09-04)
 ------------------

@@ -34,3 +34,34 @@ You can enabled the YoutTube video autoplay in two ways:
   
   This is a user choice autoplay (who links the Plone content choose to auto
   start it)
+
+In the latter case, some accessibility improvements are added to the page, for automatically
+put the focus onto the video, and simply the keyboard control on it.
+
+Credits
+=======
+
+Developed with the support of:
+
+* `Rete Civica Mo-Net - Comune di Modena`__
+  
+  .. image:: http://www.comune.modena.it/grafica/logoComune/logoComunexweb.jpg 
+     :alt: City of Modena - logo
+  
+* `Regione Emilia Romagna`__
+
+All of them supports the `PloneGov initiative`__.
+
+__ http://www.comune.modena.it/
+__ http://www.regione.emilia-romagna.it/
+__ http://www.plonegov.it/
+
+Authors
+=======
+
+This product was developed by RedTurtle Technology team.
+
+.. image:: http://www.redturtle.net/redturtle_banner.png
+   :alt: RedTurtle Technology Site
+   :target: http://www.redturtle.it/
+
