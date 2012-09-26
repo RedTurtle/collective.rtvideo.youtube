@@ -36,7 +36,7 @@ You can enabled the YoutTube video autoplay in two ways:
   start it)
 
 In the latter case, some accessibility improvements are added to the page, for automatically
-put the focus onto the video, and simply the keyboard control on it.
+put the focus onto the video, and simplify keyboard controls.
 
 Credits
 =======
