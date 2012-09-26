@@ -1,7 +1,16 @@
 <div class="youtubeEmbedWrapper">
+<script type="text/javascript" tal:condition="view/check_autofocus">
+<!--
+function onYouTubePlayerReady() {
+    document.getElementById('youtubeVideo').focus();
+}
+//-->       
+</script>
 <object width="425" height="344" id="youtubeVideo"
         tal:attributes="width view/getWidth;
-                        height view/getHeight;">
+                        height view/getHeight;
+                        tabindex python:view.check_autofocus() and '1' or None;
+                        ">
   <param name="movie" value=""
          tal:attributes="value view/getEmbedVideoLink" />
   <param name="allowFullScreen" value="true"/>
@@ -9,7 +18,8 @@
   <param name="wmode" value="transparent">
   <embed src="" tal:attributes="src view/getEmbedVideoLink;
                                 width view/getWidth;
-                                height view/getHeight;"
+                                height view/getHeight;
+                                tabindex python:view.check_autofocus() and '1' or None;"
       type="application/x-shockwave-flash" allowScriptAccess="always" allowfullscreen="true"
       wmode="transparent" width="425" height="344"></embed>
 </object>

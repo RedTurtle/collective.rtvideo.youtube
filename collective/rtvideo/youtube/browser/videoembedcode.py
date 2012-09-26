@@ -28,14 +28,17 @@ class YoutubeBase(object):
                                 'image/jpeg',
                                 '%s-image.jpg'%video_id)
         return thumb_obj
-    
+
     def check_autoplay(self, url):
-        """Check if the we need to add the autplay parameter, and add it to the URL"""
-        if self.context.getRemoteUrl().lower().find('?autoplay=1')>-1 or \
+        """Check if the we need to add the autoplay parameter, and add it to the URL"""
+        if self.context.getRemoteUrl().lower().find('autoplay=1')>-1 or \
                 self.request.QUERY_STRING.lower().find('autoplay=1')>-1:
-            url+='?autoplay=1'
+            url+='?autoplay=1&enablejsapi=1'
         return url
 
+    def check_autofocus(self):
+        """If the autoplay parameter is in the URL, return True (for enabling autofocus)"""
+        return self.request.QUERY_STRING.lower().find('autoplay=1')>-1
 
 class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     """ ClassicYoutubeEmbedCode
@@ -67,6 +70,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
 
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
+    <BLANKLINE>
     <object width="425" height="349" id="youtubeVideo">
       <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
@@ -125,6 +129,7 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
 
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
+    <BLANKLINE>
     <object width="425" height="349" id="youtubeVideo">
       <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
       <param name="allowFullScreen" value="true" />
@@ -139,11 +144,11 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
     <object width="425" height="349" id="youtubeVideo">
-      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1" />
+      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" />
       <param name="allowFullScreen" value="true" />
       <param name="allowScriptAccess" value="always" />
       <param name="wmode" value="transparent">
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
+      <embed src="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
     </object>
     </div>
     <BLANKLINE>
