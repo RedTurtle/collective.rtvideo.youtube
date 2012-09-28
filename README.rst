@@ -24,7 +24,7 @@ Also the shortened version can be used::
 Autoplay
 --------
 
-You can enabled the YoutTube video autoplay in two ways:
+You can enabled the YouTube video autoplay in two ways:
 
 * Use the YouTube ``autoplay=1`` parameter in the remote YouTube video
   you are saving in Plone.
@@ -35,8 +35,9 @@ You can enabled the YoutTube video autoplay in two ways:
   This is a user choice autoplay (who links the Plone content choose to auto
   start it)
 
-In the latter case, some accessibility improvements are added to the page, for automatically
-put the focus onto the video, and simplify keyboard controls.
+In the latter case, some accessibility improvements are added to the page for automatically
+put the focus onto the video and simplify keyboard controls (this works on Internet Explorer
+and Firefox, probably other browsers also but there isn't a common behavior).
 
 Credits
 =======
