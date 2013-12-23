@@ -26,14 +26,14 @@ Autoplay
 
 You can enabled the YouTube video autoplay in two ways:
 
-* Use the YouTube ``autoplay=1`` parameter in the remote YouTube video
+* Use the YouTube ``autoplay=1`` parameter in the YouTube video URL
   you are saving in Plone.
   
-  This is a permanent autoplay (the editor choose to autoplay the video)
+  This is a permanent autoplay: the editor choose to autoplay the video at every visit
 * Call the RedTurtle video content with the ``autoplay=1`` parameter.
   
-  This is a user choice autoplay (who links the Plone content choose to auto
-  start it)
+  This is a user choice autoplay: who links the Plone content choose to auto
+  start it.
 
 In the latter case, some accessibility improvements are added to the page for automatically
 put the focus onto the video and simplify keyboard controls (this works on Internet Explorer

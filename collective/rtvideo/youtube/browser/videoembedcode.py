@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from urlparse import urlparse
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
-
 from redturtle.video.remote_thumb import RemoteThumb
 from redturtle.video.browser.videoembedcode import VideoEmbedCode
+try:
+    from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+except ImportError:
+    # Plone < 4.1
+    from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+
 
 class YoutubeBase(object):
 
