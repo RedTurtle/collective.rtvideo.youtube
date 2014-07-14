@@ -54,7 +54,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> from redturtle.video.interfaces import IVideoEmbedCode
     >>> from zope.component import getMultiAdapter
     >>> from collective.rtvideo.youtube.tests.base import TestRequest
-    
+
     >>> request = TestRequest()
 
     >>> class RemoteVideo(object):
@@ -73,18 +73,16 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     ...                                         IVideoEmbedCode,
     ...                                         name = 'youtube.com')
     >>> adapter.getVideoLink()
-    'http://www.youtube.com/v/s43WGi_QZEE'
+    'http://www.youtube.com/embed/s43WGi_QZEE'
 
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
     <BLANKLINE>
-    <object width="425" height="349" id="youtubeVideo">
-      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
-      <param name="allowFullScreen" value="true" />
-      <param name="allowScriptAccess" value="always" />
-      <param name="wmode" value="transparent">
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
-    </object>
+    <iframe width="425"
+            height="349"
+            frameborder="0"
+            allowfullscreen
+            src="http://www.youtube.com/embed/s43WGi_QZEE" />
     </div>
     <BLANKLINE>
 
@@ -93,13 +91,11 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> remotevideo.remoteUrl += '?AUTOPLAY=1'
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
-    <object width="425" height="349" id="youtubeVideo">
-      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" />
-      <param name="allowFullScreen" value="true" />
-      <param name="allowScriptAccess" value="always" />
-      <param name="wmode" value="transparent">
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
-    </object>
+    <iframe width="425"
+            height="349"
+            frameborder="0"
+            allowfullscreen
+            src="http://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" />
     </div>
     <BLANKLINE>
 
@@ -114,15 +110,14 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     function onYouTubePlayerReady() {
         document.getElementById('youtubeVideo').focus();
     }
-    //-->       
+    //-->
     </script>
-    <object width="425" height="349" id="youtubeVideo" tabindex="1">
-      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" />
-      <param name="allowFullScreen" value="true" />
-      <param name="allowScriptAccess" value="always" />
-      <param name="wmode" value="transparent">
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349" tabindex="1"></embed>
-    </object>
+    <iframe width="425"
+            height="349"
+            frameborder="0"
+            allowfullscreen
+            src="http://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1"
+            tabindex="1" />
     </div>
     <BLANKLINE>
 
@@ -135,7 +130,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
         for param in params:
             k, v = param.split('=')
             if k == 'v':
-                return self.check_autoplay('http://www.youtube.com/v/%s' % v)
+                return self.check_autoplay('http://www.youtube.com/embed/%s' % v)
 
     def getEmbedVideoLink(self):
         """Video link, just for embedding needs"""
@@ -169,8 +164,8 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     ...         return self.size['height']
 
     >>> remotevideo = RemoteVideo()
-    >>> adapter = getMultiAdapter((remotevideo, TestRequest()), 
-    ...                                         IVideoEmbedCode, 
+    >>> adapter = getMultiAdapter((remotevideo, TestRequest()),
+    ...                                         IVideoEmbedCode,
     ...                                         name = 'youtu.be')
     >>> adapter.getVideoLink()
     'http://youtu.be/s43WGi_QZEE'
@@ -178,13 +173,11 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> print adapter()
     <div class="youtubeEmbedWrapper">
     <BLANKLINE>
-    <object width="425" height="349" id="youtubeVideo">
-      <param name="movie" value="http://www.youtube.com/v/s43WGi_QZEE" />
-      <param name="allowFullScreen" value="true" />
-      <param name="allowScriptAccess" value="always" />
-      <param name="wmode" value="transparent">
-      <embed src="http://www.youtube.com/v/s43WGi_QZEE" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="425" height="349"></embed>
-    </object>
+    <iframe width="425"
+            height="349"
+            frameborder="0"
+            allowfullscreen
+            src="http://www.youtube.com/embed/s43WGi_QZEE" />
     </div>
     <BLANKLINE>
 
@@ -194,12 +187,11 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     def getEmbedVideoLink(self):
         """Video link to be used for play video, so in the extended format"""
         path = urlparse(self.context.getRemoteUrl())[2]
-        return self.check_autoplay('http://www.youtube.com/v%s' % path)
+        return self.check_autoplay('http://www.youtube.com/embed%s' % path)
 
     def getVideoLink(self):
         path = urlparse(self.context.getRemoteUrl())[2]
         return self.check_autoplay('http://youtu.be%s' % path)
-    
-    def get_video_id(self, parsed_remote_url):
-        return parsed_remote_url[2].replace('/','')
 
+    def get_video_id(self, parsed_remote_url):
+        return parsed_remote_url[2].replace('/', '')

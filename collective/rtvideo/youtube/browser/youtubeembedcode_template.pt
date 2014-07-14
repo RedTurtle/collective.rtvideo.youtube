@@ -6,21 +6,12 @@ function onYouTubePlayerReady() {
 }
 //-->       
 </script>
-<object width="425" height="344" id="youtubeVideo"
+<iframe width="560"
+        height="315"
+        frameborder="0"
+        allowfullscreen
         tal:attributes="width view/getWidth;
                         height view/getHeight;
                         tabindex python:view.check_autofocus() and '1' or None;
-                        ">
-  <param name="movie" value=""
-         tal:attributes="value view/getEmbedVideoLink" />
-  <param name="allowFullScreen" value="true"/>
-  <param name="allowScriptAccess" value="always"/>
-  <param name="wmode" value="transparent">
-  <embed src="" tal:attributes="src view/getEmbedVideoLink;
-                                width view/getWidth;
-                                height view/getHeight;
-                                tabindex python:view.check_autofocus() and '1' or None;"
-      type="application/x-shockwave-flash" allowScriptAccess="always" allowfullscreen="true"
-	  wmode="transparent" width="425" height="344"></embed>
-</object>
+                        src view/getEmbedVideoLink" />
 </div>
