@@ -13,5 +13,6 @@ function onYouTubePlayerReady() {
         tal:attributes="width view/getWidth;
                         height view/getHeight;
                         tabindex python:view.check_autofocus() and '1' or None;
-                        src view/getEmbedVideoLink" />
+                        src view/getEmbedVideoLink">
+</iframe>
 </div>

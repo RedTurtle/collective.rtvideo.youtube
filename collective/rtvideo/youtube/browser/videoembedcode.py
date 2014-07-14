@@ -30,14 +30,14 @@ class YoutubeBase(object):
         img_url = 'http://img.youtube.com/vi/%s/0.jpg' % video_id
         thumb_obj = RemoteThumb(img_url,
                                 'image/jpeg',
-                                '%s-image.jpg'%video_id)
+                                '%s-image.jpg' % video_id)
         return thumb_obj
 
     def check_autoplay(self, url):
         """Check if the we need to add the autoplay parameter, and add it to the URL"""
         if self.context.getRemoteUrl().lower().find('autoplay=1')>-1 or \
                 self.request.QUERY_STRING.lower().find('autoplay=1')>-1:
-            url+='?autoplay=1&enablejsapi=1'
+            url += '?autoplay=1&enablejsapi=1'
         return url
 
     def check_autofocus(self):
@@ -82,7 +82,8 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             height="349"
             frameborder="0"
             allowfullscreen
-            src="http://www.youtube.com/embed/s43WGi_QZEE" />
+            src="http://www.youtube.com/embed/s43WGi_QZEE">
+    </iframe>
     </div>
     <BLANKLINE>
 
@@ -95,7 +96,8 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             height="349"
             frameborder="0"
             allowfullscreen
-            src="http://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1" />
+            src="http://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1">
+    </iframe>
     </div>
     <BLANKLINE>
 
@@ -117,7 +119,8 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             frameborder="0"
             allowfullscreen
             src="http://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1"
-            tabindex="1" />
+            tabindex="1">
+    </iframe>
     </div>
     <BLANKLINE>
 
@@ -142,10 +145,10 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
 
 
 class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
-    """ ShortYoutubeEmbedCode 
+    """ ShortYoutubeEmbedCode
     Provides a way to have a html code to embed Youtube video in a web page (short way).
     Also, the new version of the embed URL must works:
-    
+
     >>> from zope.interface import implements
     >>> from redturtle.video.interfaces import IRTRemoteVideo
     >>> from redturtle.video.interfaces import IVideoEmbedCode
@@ -177,7 +180,8 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             height="349"
             frameborder="0"
             allowfullscreen
-            src="http://www.youtube.com/embed/s43WGi_QZEE" />
+            src="http://www.youtube.com/embed/s43WGi_QZEE">
+    </iframe>
     </div>
     <BLANKLINE>
 
