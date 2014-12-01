@@ -4,7 +4,10 @@ Changelog
 0.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Always load the https version of resources URL
+  [keul]
+- Fixed non-XHTML usage of ``allowfullscreen`` attribute
+  [keul]
 
 
 0.3.0 (2014-07-21)

@@ -32,7 +32,7 @@ class TestGetThumb(TestCase):
         self.assertEqual('%s-image.jpg'%video_id,
                          thumb_obj.filename)
         
-        self.assertEqual('http://img.youtube.com/vi/%s/0.jpg'%video_id,
+        self.assertEqual('https://img.youtube.com/vi/%s/0.jpg'%video_id,
                          thumb_obj.url)
 
         self.assertTrue(isinstance(thumb_obj, RemoteThumb))
@@ -55,7 +55,7 @@ class TestGetThumb(TestCase):
         self.assertEqual('%s-image.jpg'%video_id,
                          thumb_obj.filename)
         
-        self.assertEqual('http://img.youtube.com/vi/%s/0.jpg'%video_id,
+        self.assertEqual('https://img.youtube.com/vi/%s/0.jpg'%video_id,
                          thumb_obj.url)
 
         self.assertTrue(isinstance(thumb_obj, RemoteThumb))

@@ -9,7 +9,7 @@ function onYouTubePlayerReady() {
 <iframe width="560"
         height="315"
         frameborder="0"
-        allowfullscreen
+        allowfullscreen="allowfullscreen"
         tal:attributes="width view/getWidth;
                         height view/getHeight;
                         tabindex python:view.check_autofocus() and '1' or None;
