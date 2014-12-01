@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3.1 (unreleased)
+0.3.1 (2014-12-01)
 ------------------
 
 - Always load the https version of resources URL
