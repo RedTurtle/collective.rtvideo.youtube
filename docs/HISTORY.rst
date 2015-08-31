@@ -4,7 +4,8 @@ Changelog
 0.3.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed tests and testcase
+  [keul]
 
 
 0.3.1 (2014-12-01)

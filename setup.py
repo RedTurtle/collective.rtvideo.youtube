@@ -3,6 +3,9 @@ import os
 
 version = '0.3.2.dev0'
 
+tests_require=['zope.testing',
+               'Products.PloneTestCase']
+
 setup(name='collective.rtvideo.youtube',
       version=version,
       description="The YouTube Plone support for RedTurtle Video",
@@ -30,6 +33,8 @@ setup(name='collective.rtvideo.youtube',
       namespace_packages=['collective', 'collective.rtvideo'],
       include_package_data=True,
       zip_safe=False,
+      tests_require=tests_require,
+      extras_require=dict(test=tests_require),
       install_requires=[
           'setuptools',
           'redturtle.video>=0.8.0',

@@ -81,7 +81,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     <iframe width="425"
             height="349"
             frameborder="0"
-            allowfullscreen
+            allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE">
     </iframe>
     </div>
@@ -95,7 +95,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     <iframe width="425"
             height="349"
             frameborder="0"
-            allowfullscreen
+            allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1">
     </iframe>
     </div>
@@ -117,7 +117,7 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     <iframe width="425"
             height="349"
             frameborder="0"
-            allowfullscreen
+            allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1"
             tabindex="1">
     </iframe>
@@ -179,7 +179,7 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     <iframe width="425"
             height="349"
             frameborder="0"
-            allowfullscreen
+            allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE">
     </iframe>
     </div>
