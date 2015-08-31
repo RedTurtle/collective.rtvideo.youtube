@@ -61,8 +61,11 @@ def setup_product():
 setup_product()
 ptc.setupPloneSite(products=['redturtle.video', 'collective.rtvideo.youtube'])
 
+
 class TestRequest(BaseTestRequest):
     implements(IHTTPRequest)
+    
+    cookies = {}
     
     def __init__(self, body_instream=None, environ=None, form=None,
              skin=None, **kw):
@@ -77,7 +80,8 @@ class TestCase(ptc.PloneTestCase):
     necessary, we can put common utility or setup code in here. This
     applies to unit test cases.
     """
-    
+
+
 class RemoteVideo(object):
     """
     We provide a fake video for test
@@ -85,8 +89,9 @@ class RemoteVideo(object):
     implements(IRTRemoteVideo)
     remoteUrl = 'http://www.youtube.com/watch?v=s43WGi_QZEE&feature=related'
     
-    def getRemoteUrl(self):
+    def getRemoteVideoURL(self):
         return self.remoteUrl
+
 
 class ShortUrlRemoteVideo(object):
     """
@@ -95,9 +100,8 @@ class ShortUrlRemoteVideo(object):
     implements(IRTRemoteVideo)
     remoteUrl = 'http://youtu.be/s43WGi_QZEE'
     
-    def getRemoteUrl(self):
+    def getRemoteVideoURL(self):
         return self.remoteUrl
-
 
 
 class FunctionalTestCase(ptc.FunctionalTestCase):

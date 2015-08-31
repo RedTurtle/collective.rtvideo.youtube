@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3.2.dev0'
+version = '0.4.0.dev0'
 
 tests_require=['zope.testing',
                'Products.PloneTestCase']
@@ -37,7 +37,7 @@ setup(name='collective.rtvideo.youtube',
       extras_require=dict(test=tests_require),
       install_requires=[
           'setuptools',
-          'redturtle.video>=0.8.0',
+          'redturtle.video>=1.2.0',
       ],
       entry_points="""
       # -*- Entry points: -*-

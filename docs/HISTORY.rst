@@ -1,12 +1,17 @@
 Changelog
 =========
 
-0.3.2 (unreleased)
+0.4.0 (unreleased)
 ------------------
 
 - Fixed tests and testcase
   [keul]
-
+- Added a link to the remote video
+  [keul]
+- Added opt-out privacy support
+  [keul]
+- Templates updated to format required from redturtle.video >= 1.2.0
+  [keul]
 
 0.3.1 (2014-12-01)
 ------------------
@@ -15,7 +20,6 @@ Changelog
   [keul]
 - Fixed non-XHTML usage of ``allowfullscreen`` attribute
   [keul]
-
 
 0.3.0 (2014-07-21)
 ------------------

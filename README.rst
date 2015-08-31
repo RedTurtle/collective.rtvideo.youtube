@@ -39,6 +39,14 @@ In the latter case, some accessibility improvements are added to the page for au
 put the focus onto the video and simplify keyboard controls (this works on Internet Explorer
 and Firefox, probably other browsers also but there isn't a common behavior).
 
+Privacy
+-------
+
+The remote video will not be show if a ``video-optout`` with value ``true`` is present, preventing
+YouTube from sendings cookies to your users.
+
+This add-on (and neither RedTurtle Video) will not handle how this cookie is set. 
+
 Credits
 =======
 

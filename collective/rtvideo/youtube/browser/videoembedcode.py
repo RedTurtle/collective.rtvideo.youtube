@@ -25,7 +25,7 @@ class YoutubeBase(object):
         So you can call somethign like:
              https://img.youtube.com/vi/S9UABZVATeY/0.jpg
         """
-        parsed_remote_url = urlparse(self.context.getRemoteUrl())
+        parsed_remote_url = urlparse(self.context.getRemoteVideoURL())
         video_id = self.get_video_id(parsed_remote_url)
         img_url = 'https://img.youtube.com/vi/%s/0.jpg' % video_id
         thumb_obj = RemoteThumb(img_url,
@@ -35,7 +35,7 @@ class YoutubeBase(object):
 
     def check_autoplay(self, url):
         """Check if the we need to add the autoplay parameter, and add it to the URL"""
-        if self.context.getRemoteUrl().lower().find('autoplay=1')>-1 or \
+        if self.context.getRemoteVideoURL().lower().find('autoplay=1')>-1 or \
                 self.request.QUERY_STRING.lower().find('autoplay=1')>-1:
             url += '?autoplay=1&enablejsapi=1'
         return url
@@ -56,12 +56,13 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> from collective.rtvideo.youtube.tests.base import TestRequest
 
     >>> request = TestRequest()
+    >>> request.cookies = {}
 
     >>> class RemoteVideo(object):
     ...     implements(IRTRemoteVideo)
     ...     remoteUrl = 'https://www.youtube.com/watch?v=s43WGi_QZEE&feature=related'
     ...     size = {'width': 425, 'height': 349}
-    ...     def getRemoteUrl(self):
+    ...     def getRemoteVideoURL(self):
     ...         return self.remoteUrl
     ...     def getWidth(self):
     ...         return self.size['width']
@@ -84,6 +85,12 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE">
     </iframe>
+    <BLANKLINE>
+    <div class="removeVideoURL">
+        <a href="https://www.youtube.com/watch?v=s43WGi_QZEE&amp;feature=related" title="Open in a new window"  target="_blank">
+            See video on YoutTube
+        </a>
+    </div>
     </div>
     <BLANKLINE>
 
@@ -98,6 +105,12 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1">
     </iframe>
+    <BLANKLINE>
+    <div class="removeVideoURL">
+        <a href="https://www.youtube.com/watch?v=s43WGi_QZEE&amp;feature=related?AUTOPLAY=1" title="Open in a new window" target="_blank">
+            See video on YoutTube
+        </a>
+    </div>
     </div>
     <BLANKLINE>
 
@@ -121,14 +134,39 @@ class ClassicYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             src="https://www.youtube.com/embed/s43WGi_QZEE?autoplay=1&amp;enablejsapi=1"
             tabindex="1">
     </iframe>
+    <BLANKLINE>
+    <div class="removeVideoURL">
+        <a href="https://www.youtube.com/watch?v=s43WGi_QZEE&amp;feature=related?AUTOPLAY=1" title="Open in a new window" target="_blank">
+            See video on YoutTube
+        </a>
+    </div>
     </div>
     <BLANKLINE>
+
+    If the request contains a "video-optout" cookie valued to "true", the video is not show.
+
+    >>> request.cookies['video-optout']  = 'true'
+    >>> print adapter()
+    <div class="youtubeEmbedWrapper">
+    <BLANKLINE>
+    <p class="videoBlockedWarning">
+        Privacy settings prevents the video from being displayed.
+    </p>
+    <BLANKLINE>
+    <div class="removeVideoURL">
+        <a href="https://www.youtube.com/watch?v=s43WGi_QZEE&amp;feature=related?AUTOPLAY=1" title="Open in a new window" target="_blank">
+            See video on YoutTube
+        </a>
+    </div>
+    </div>
+    <BLANKLINE>
+
 
     """
     template = ViewPageTemplateFile('youtubeembedcode_template.pt')
 
     def getVideoLink(self):
-        qs = urlparse(self.context.getRemoteUrl())[4]
+        qs = urlparse(self.context.getRemoteVideoURL())[4]
         params = qs.split('&')
         for param in params:
             k, v = param.split('=')
@@ -155,11 +193,14 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
     >>> from zope.component import getMultiAdapter
     >>> from collective.rtvideo.youtube.tests.base import TestRequest
 
+    >>> request = TestRequest()
+    >>> request.cookies = {}
+
     >>> class RemoteVideo(object):
     ...     implements(IRTRemoteVideo)
     ...     remoteUrl = 'https://youtu.be/s43WGi_QZEE'
     ...     size = {'width': 425, 'height': 349}
-    ...     def getRemoteUrl(self):
+    ...     def getRemoteVideoURL(self):
     ...         return self.remoteUrl
     ...     def getWidth(self):
     ...         return self.size['width']
@@ -182,6 +223,12 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
             allowfullscreen="allowfullscreen"
             src="https://www.youtube.com/embed/s43WGi_QZEE">
     </iframe>
+    <BLANKLINE>
+    <div class="removeVideoURL">
+        <a href="https://youtu.be/s43WGi_QZEE" title="Open in a new window" target="_blank">
+            See video on YoutTube
+        </a>
+    </div>
     </div>
     <BLANKLINE>
 
@@ -190,11 +237,11 @@ class ShortYoutubeEmbedCode(YoutubeBase, VideoEmbedCode):
 
     def getEmbedVideoLink(self):
         """Video link to be used for play video, so in the extended format"""
-        path = urlparse(self.context.getRemoteUrl())[2]
+        path = urlparse(self.context.getRemoteVideoURL())[2]
         return self.check_autoplay('https://www.youtube.com/embed%s' % path)
 
     def getVideoLink(self):
-        path = urlparse(self.context.getRemoteUrl())[2]
+        path = urlparse(self.context.getRemoteVideoURL())[2]
         return self.check_autoplay('https://youtu.be%s' % path)
 
     def get_video_id(self, parsed_remote_url):
