@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4.0 (unreleased)
+0.4.0 (2018-09-07)
 ------------------
 
 - Fixed tests and testcase
